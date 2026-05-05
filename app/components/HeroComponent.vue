@@ -1,39 +1,53 @@
 <script setup lang="ts">
-// const config = useRuntimeConfig();
-
-// const { data } = await useFetch(`${config.public.strapiUrl}/api/new?populate=*`, {
-//   transform: (res: any) => {
-//     const item = res.data?.[0];
-//     if (!item) return null;
-//     return {
-//       title: item.title?.[0]?.children?.[0]?.text ?? null,
-//       description: item.decription?.[0]?.children?.[0]?.text ?? null,
-//       imgUrl: item.img?.[0]?.url ? `${config.public.strapiUrl}${item.img[0].url}` : null,
-//     };
-//   },
-// });
+const props = defineProps<{
+  title: string;
+  description: string;
+  buttonText?: string;
+  imageUrl?: string;
+  hideImage?: boolean;
+}>();
 </script>
 <template>
   <div class="bg-[#00708B]">
     <div class="mx-auto px-4" style="max-width: 1408px">
       <div class="flex flex-row items-center pt-16 pb-16">
-        <div class="flex flex-col gap-8">
-          <p class="font-[Poppins] font-bold text-[64px] leading-21.5 text-white w-[712px]">
-            Powering Innovation, Delivering Excellence
+        <div :class="props.hideImage ? 'w-full text-left' : 'flex flex-col gap-8'">
+          <p
+            :class="
+              props.hideImage
+                ? 'font-[Poppins] font-bold text-[64px] leading-21.5 text-white max-w-225'
+                : 'font-[Poppins] font-bold text-[64px] leading-21.5 text-white max-w-225'
+            "
+          >
+            {{ props.title }}
           </p>
-          <p class="font-[Poppins] font-regular text-[20px] text-white w-[712px]">
-            At Edmundson Electrical, we are your trusted partner in electrical distribution,
-            combining over two centuries of expertise with a commitment to quality, innovation, and
-            exceptional service. Together, let's build a brighter future.
+          <p
+            :class="
+              props.hideImage
+                ? 'font-[Poppins] font-regular text-[20px] text-white  max-w-225'
+                : 'font-[Poppins] font-regular text-[20px] text-white max-w-225'
+            "
+          >
+            {{ props.description }}
           </p>
           <UButton
+            v-if="props.buttonText"
             trailing-icon="i-lucide-arrow-right"
             size="md"
-            class="self-start gap-3 bg-orange-500 hover:bg-orange-600"
-            >Button</UButton
+            :class="
+              props.hideImage
+                ? 'mx-auto mt-8 gap-3 bg-orange-500 hover:bg-orange-600'
+                : 'self-start gap-3 bg-orange-500 hover:bg-orange-600'
+            "
+            >{{ props.buttonText }}</UButton
           >
         </div>
-        <img src="../assets/images/main.png" alt="" class="flex-1 min-w-0 object-contain" />
+        <img
+          v-if="props.imageUrl && !props.hideImage"
+          :src="props.imageUrl"
+          alt=""
+          class="flex-1 min-w-0 object-contain"
+        />
       </div>
     </div>
   </div>

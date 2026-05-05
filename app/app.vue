@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import HeaderComponent from "./components/HeaderComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 </script>
 
 <template>
-  <UApp>
+  <UApp class="min-h-screen flex flex-col">
     <HeaderComponent />
-    <NuxtPage />
+    <div class="flex-1">
+      <NuxtPage />
+    </div>
+    <FooterComponent />
   </UApp>
 </template>

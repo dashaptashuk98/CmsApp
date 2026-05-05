@@ -1,5 +1,10 @@
 <template>
   <div>
+    <HeroComponent
+      :title="heroData?.[3]?.title || 'News'"
+      :description="heroData?.[3]?.description || ''"
+      :imageUrl="heroData?.[3]?.imgUrl || undefined"
+    />
     <UMain>
       <div class="py-12 mx-auto px-4" style="max-width: 1408px">
         <h1 class="text-4xl font-bold text-[#00708B] mb-8">News</h1>
@@ -12,7 +17,8 @@
               <h3 class="text-xl font-semibold mb-2">News Article {{ i }}</h3>
               <p class="text-gray-500 text-sm mb-3">Published on January {{ i }}, 2024</p>
               <p class="text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.
               </p>
               <UButton variant="ghost" class="mt-4">Read More</UButton>
             </div>
@@ -22,3 +28,8 @@
     </UMain>
   </div>
 </template>
+<script setup lang="ts">
+import HeroComponent from "~/components/HeroComponent.vue";
+
+const { data: heroData, imageUrl } = await useHeroData("news");
+</script>

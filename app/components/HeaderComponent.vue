@@ -11,7 +11,18 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
   {
     label: "About Us",
-    to: "/about",
+    children: [
+      {
+        label: "About Us",
+        to: "/about",
+        active: route.path === "/about",
+      },
+      {
+        label: "Values",
+        to: "/about-values",
+        active: route.path === "/about-values",
+      },
+    ],
   },
   {
     label: "Contact Us",
