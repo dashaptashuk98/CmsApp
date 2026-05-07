@@ -25,7 +25,7 @@ const { data: services } = useQuery<Service[]>({
   },
 });
 
-const { data: heroData, imageUrl } = await useHeroData("news");
+const { data: heroData } = await useHeroData("news");
 
 const { data: partnerData } = await usePartnerData("partners");
 
@@ -41,7 +41,7 @@ const handlePartnerClick = (link: string) => {
     <HeroComponent
       :title="heroData?.[0]?.title || 'Powering Innovation, Delivering Excellence'"
       :description="heroData?.[0]?.description || ''"
-      :imageUrl="imageUrl || undefined"
+      :imageUrl="heroData?.[0]?.imgUrl || undefined"
       button-text="Button"
     />
     <UMain class="flex flex-col flex-1">

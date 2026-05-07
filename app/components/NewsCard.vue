@@ -32,7 +32,7 @@ const props = defineProps<{
   authorName: string;
   date: string;
   description: string;
-  tags: string[];
   isFirst?: boolean;
+  tags?: string[];
 }>();
 </script>

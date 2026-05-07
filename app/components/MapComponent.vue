@@ -90,7 +90,7 @@ const searchLocation = async (): Promise<void> => {
     );
 
     if (res?.length) {
-      map.setView([parseFloat(res[0].lat), parseFloat(res[0].lon)], 13);
+      map.setView([parseFloat(res?.[0]?.lat), parseFloat(res[0].lon)], 13);
     }
   } catch (error) {
     console.error("Error searching location:", error);
