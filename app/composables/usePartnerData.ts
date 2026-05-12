@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { Partner, PartnerResponse } from "~/types";
+import { QUERY_KEYS } from "~/constants/api";
 
 export const usePartnerData = async (endpoint: string) => {
   const config = useRuntimeConfig();
 
   return useQuery({
-    queryKey: ["partner", endpoint],
+    queryKey: [QUERY_KEYS.PARTNER, endpoint],
     queryFn: async () => {
       const response = await $fetch<PartnerResponse>(
         `${config.public.strapiUrl}/api/${endpoint}?populate=*`

@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { NewsTag } from "~/types";
+import { QUERY_KEYS } from "~/constants/api";
 
 export const useTagsData = (endpoint: string) => {
   const config = useRuntimeConfig();
 
   return useQuery({
-    queryKey: ["tags", endpoint],
+    queryKey: [QUERY_KEYS.TAGS, endpoint],
     queryFn: async () => {
       const response = await $fetch<{ data: NewsTag[] }>(
         `${config.public.strapiUrl}/api/${endpoint}?populate=*`

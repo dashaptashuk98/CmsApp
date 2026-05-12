@@ -1,18 +1,16 @@
 <template>
-  <UCard :class="isFirst ? 'h-full max-h-173.5' : 'h-full'">
+  <UCard :class="isFirst ? 'h-full max-h-173.5 flex flex-col' : 'h-full flex flex-col'">
     <img
       :src="imageSrc"
       alt="Card image"
       :class="
-        isFirst
-          ? 'w-full flex-1 object-cover rounded-xl mb-4'
-          : 'w-full h-48 object-cover rounded-xl mb-4'
+        isFirst ? 'w-full object-cover rounded-xl mb-4' : 'w-full h-48 object-cover rounded-xl mb-4'
       "
-      :style="isFirst ? 'height: 480px' : ''"
+      :style="isFirst ? 'max-height: 600px' : ''"
     />
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 flex-1 overflow-hidden">
       <div class="text-gray-500 text-sm">{{ authorName }} • {{ date }}</div>
-      <p class="text-gray-900">{{ description }}</p>
+      <p class="text-gray-900 line-clamp-3">{{ description }}</p>
       <div class="flex flex-wrap gap-2 mt-auto">
         <span
           v-for="(tag, index) in tags"

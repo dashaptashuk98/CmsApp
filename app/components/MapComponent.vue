@@ -1,9 +1,9 @@
 <template>
-  <div class="locate-us-container">
-    <h2 class="text-4xl font-bold text-gray-800 mb-8">Locate Us Nearby</h2>
+  <div class="locate-us-container px-4">
+    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8">Locate Us Nearby</h2>
 
-    <div class="flex gap-6">
-      <div class="w-96 shrink-0">
+    <div class="flex flex-col lg:flex-row gap-4 md:gap-6">
+      <div class="w-full lg:w-96 shrink-0">
         <div class="mb-6 w-full">
           <UInput
             v-model="searchQuery"
@@ -19,7 +19,7 @@
           </UButton>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-4 max-h-96 lg:max-h-none overflow-y-auto">
           <div
             v-for="(location, index) in locations"
             :key="index"
@@ -60,9 +60,9 @@
         </div>
       </div>
 
-      <div class="flex-1">
+      <div class="flex-1 min-h-96 lg:min-h-0">
         <ClientOnly>
-          <div id="map" class="h-157.75 w-full rounded-lg shadow-sm"></div>
+          <div id="map" class="h-96 lg:h-157.75 w-full rounded-lg shadow-sm"></div>
         </ClientOnly>
       </div>
     </div>
@@ -72,6 +72,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import { useMapLocations } from "~/composables/useLocationsData";
+import { API_ENDPOINTS } from "~/constants/api";
 import type { Map, Marker, DivIcon } from "leaflet";
 import type { MappedLocation, NominatimResult } from "~/types";
 
@@ -79,7 +80,7 @@ const searchQuery = ref<string>("London");
 let map: Map | null = null;
 let markers: Marker[] = [];
 
-const { data: locations } = useMapLocations("locations");
+const { data: locations } = useMapLocations(API_ENDPOINTS.LOCATIONS);
 
 const searchLocation = async (): Promise<void> => {
   if (!searchQuery.value || !map) return;

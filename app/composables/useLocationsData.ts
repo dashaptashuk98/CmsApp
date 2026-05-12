@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { LocationResponse, Location } from "~/types";
+import { QUERY_KEYS } from "~/constants/api";
+
 export const useMapLocations = (endpoint: string) => {
   const config = useRuntimeConfig();
 
   return useQuery({
-    queryKey: ["locations", endpoint],
+    queryKey: [QUERY_KEYS.LOCATIONS, endpoint],
     queryFn: async () => {
       const response = await $fetch<LocationResponse>(
         `${config.public.strapiUrl}/api/${endpoint}?populate=*`

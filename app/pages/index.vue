@@ -5,6 +5,7 @@ import MapComponent from "~/components/MapComponent.vue";
 import PartnerComponent from "~/components/PartnerComponent.vue";
 import NewsCard from "~/components/NewsCard.vue";
 import { useQuery } from "@tanstack/vue-query";
+import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
 
 const config = useRuntimeConfig();
 
@@ -16,20 +17,20 @@ interface Service {
 }
 
 const { data: services } = useQuery<Service[]>({
-  queryKey: ["services"],
+  queryKey: [QUERY_KEYS.SERVICES],
   queryFn: async () => {
     const res = await $fetch<{ data: Service[] }>(
-      `${config.public.strapiUrl}/api/services?populate=*`
+      `${config.public.strapiUrl}/api/${API_ENDPOINTS.SERVICES}?populate=*`
     );
     return res.data ?? [];
   },
 });
 
-const { data: heroData } = await useHeroData("news");
+const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
 
-const { data: partnerData } = await usePartnerData("partners");
+const { data: partnerData } = await usePartnerData(API_ENDPOINTS.PARTNERS);
 
-const { data: notionData } = await useNotionData("notions");
+const { data: notionData } = await useNotionData(API_ENDPOINTS.NOTIONS);
 
 const handlePartnerClick = (link: string) => {
   console.log("Partner link clicked:", link);
@@ -45,29 +46,27 @@ const handlePartnerClick = (link: string) => {
       button-text="Button"
     />
     <UMain class="flex flex-col flex-1">
-      <div class="space-y-16 py-12 mx-auto flex-1" style="max-width: 1408px">
+      <div class="space-y-8 md:space-y-12 lg:space-y-16 py-6 md:py-10 lg:py-12 px-4 mx-auto flex-1" style="max-width: 1408px; width: 100%">
         <section>
-          <h1 class="text-4xl font-bold text-[#222E31] mb-4">Our Services</h1>
-          <p class="text-gray-600 text-lg">
+          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-3 md:mb-4">Our Services</h1>
+          <p class="text-gray-600 text-base md:text-lg">
             At Edmundson Electrical, we don't just provide service – we deliver excellence. Our
             commitment to quality, reliability, and customer satisfaction sets us apart.
           </p>
-          <div class="flex gap-4 mt-8 items-stretch">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 md:mt-8">
             <CardComponent
               v-for="service in services"
               :key="service.id"
               :image-src="service.img?.url ? `${config.public.strapiUrl}${service.img.url}` : ''"
               :title="service.title"
               :description="service.description"
-              class="w-full sm:w-auto"
-              style="flex-basis: 340px; max-width: 340px"
             />
           </div>
         </section>
         <MapComponent />
 
         <section>
-          <h2 class="text-4xl font-bold text-[#222E31] mb-8">Our Partners</h2>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-6 md:mb-8 px-4">Our Partners</h2>
           <PartnerComponent
             v-for="partner in partnerData"
             :key="partner.id"
@@ -78,11 +77,11 @@ const handlePartnerClick = (link: string) => {
             :background-image="partner.backgroundImage"
             button-text="Learn more"
             @button-click="handlePartnerClick"
-            class="mb-8"
+            class="mb-6 md:mb-8"
           />
         </section>
-        <section>
-          <div class="grid grid-cols-2 gap-6" style="grid-template-rows: auto auto">
+        <section class="px-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             <NewsCard
               v-if="notionData?.[0]"
               :image-src="notionData[0].logo"
@@ -91,7 +90,7 @@ const handlePartnerClick = (link: string) => {
               :description="notionData[0].description"
               :tags="['tag1', 'tag2', 'tag3']"
               :is-first="true"
-              class="row-span-2 h-full"
+              class="md:row-span-2 h-full"
             />
             <NewsCard
               v-if="notionData?.[1]"
@@ -111,18 +110,18 @@ const handlePartnerClick = (link: string) => {
             />
           </div>
         </section>
-        <section>
-          <div class="locator__wrapper flex justify-between items-center">
+        <section class="px-4">
+          <div class="locator__wrapper flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div class="locator__container flex flex-col gap-3">
-              <h2 class="text-4xl font-bold text-[#222E31] mb-8">Locator App</h2>
-              <p class="text-gray-600 text-lg mb-4 max-w-238.25">
+              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-4 md:mb-8">Locator App</h2>
+              <p class="text-gray-600 text-base md:text-lg mb-4">
                 Download Our Locator App Available on iPhone and Android. Find your nearest
                 Edmundson Electrical branch with just a tap!
               </p>
             </div>
-            <div class="img__container flex gap-6">
-              <img src="../assets/images/pay.png" alt="" class="pay" width="169" height="50" />
-              <img src="../assets/images/google.png" alt="" class="pay" width="169" height="50" />
+            <div class="img__container flex gap-4 md:gap-6 flex-wrap">
+              <img src="../assets/images/pay.png" alt="" class="pay w-32 md:w-42 h-auto" />
+              <img src="../assets/images/google.png" alt="" class="pay w-32 md:w-42 h-auto" />
             </div>
           </div>
         </section>

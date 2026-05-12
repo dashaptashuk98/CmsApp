@@ -14,12 +14,14 @@
       />
     </div>
     <UMain>
-      <div class="py-12 mx-auto" style="max-width: 1408px">
-        <h1 class="text-4xl font-bold text-black mb-8">Our Expectations</h1>
-        <p class="text-lg text-gray-600 mb-8">
+      <div class="py-6 md:py-10 lg:py-12 px-4 mx-auto" style="max-width: 1408px">
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 md:mb-8">
+          Our Expectations
+        </h1>
+        <p class="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
           Donec vestibulum eros eget sem tincidunt, sit amet auctor odio convallis.
         </p>
-        <div class="flex gap-4 mb-5">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
           <CareerComponent
             v-for="value in CareerData"
             :key="value.id"
@@ -28,23 +30,23 @@
             :li-item="value.liItem"
           />
         </div>
-        <h1 class="text-4xl font-bold text-black mb-8">Our Commitment to You</h1>
-        <p class="text-lg text-gray-600 mb-8">
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 md:mb-8">
+          Our Commitment to You
+        </h1>
+        <p class="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
           Donec vestibulum eros eget sem tincidunt, sit amet auctor odio convallis.
         </p>
-        <div class="flex gap-4 mt-8 mb-6 items-stretch">
+        <div class="grid grid-cols-4 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-6 md:mt-8 mb-6">
           <CardComponent
             v-for="value in values"
             :key="value.id"
             :image-src="value.logo?.url ? `${config.public.strapiUrl}${value.logo.url}` : ''"
             :title="value.title"
             :description="value.description"
-            class="w-full sm:w-auto"
-            style="flex-basis: 340px; max-width: 340px"
           />
         </div>
         <section>
-          <div class="relative rounded-xl mb-5">
+          <div class="relative rounded-xl mb-5 overflow-hidden">
             <img src="../assets/images/bgAbout.png" alt="" class="w-full rounded-xl" />
             <div
               class="absolute inset-0 z-10 rounded-xl"
@@ -54,21 +56,28 @@
             <img
               src="../assets/images/ee-Logo.png"
               alt=""
-              class="absolute z-20 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              class="absolute z-20 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 md:w-24 lg:w-auto"
             />
 
             <div
-              class="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[rgba(210,210,210,0.5)] rounded-full p-4 flex items-center justify-center"
+              class="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[rgba(210,210,210,0.5)] rounded-full p-2 md:p-4 flex items-center justify-center"
             >
-              <img src="../assets/images/play_arrow.png" alt="" />
+              <img src="../assets/images/play_arrow.png" alt="" class="w-6 md:w-8" />
             </div>
           </div>
         </section>
-        <h1 class="text-4xl font-bold text-black mb-8">Our People, Their Stories</h1>
-        <p class="text-lg text-gray-600 mb-8">
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 md:mb-8">
+          Our People, Their Stories
+        </h1>
+        <p class="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
           Donec vestibulum eros eget sem tincidunt, sit amet auctor odio convallis.
         </p>
-        <UCarousel v-slot="{ item }" dots :items="EmployeeData || []" :ui="{ item: 'basis-1/3' }">
+        <UCarousel
+          v-slot="{ item }"
+          dots
+          :items="EmployeeData || []"
+          :ui="{ item: 'basis-full md:basis-1/2 lg:basis-1/3' }"
+        >
           <EmployeeComponent
             :name="item.name"
             :position="item.position"
@@ -92,11 +101,12 @@
 
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
+import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
 
 const config = useRuntimeConfig();
-const { data: heroData } = await useHeroData("news");
-const { data: CareerData } = useCareerData("careers");
-const { data: EmployeeData } = useEmployeesData("employees");
+const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
+const { data: CareerData } = useCareerData(API_ENDPOINTS.CAREERS);
+const { data: EmployeeData } = useEmployeesData(API_ENDPOINTS.EMPLOYEES);
 
 interface Values {
   id: number;
@@ -106,10 +116,10 @@ interface Values {
 }
 
 const { data: values } = useQuery<Values[]>({
-  queryKey: ["commitments"],
+  queryKey: [QUERY_KEYS.COMMITMENTS],
   queryFn: async () => {
     const res = await $fetch<{ data: Values[] }>(
-      `${config.public.strapiUrl}/api/commitments?populate=*`
+      `${config.public.strapiUrl}/api/${API_ENDPOINTS.COMMITMENTS}?populate=*`
     );
     return res.data ?? [];
   },

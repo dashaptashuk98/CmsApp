@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { AboutCard } from "~/types";
+import { QUERY_KEYS } from "~/constants/api";
 
 export const useAboutData = (endpoint: string) => {
   const config = useRuntimeConfig();
 
   return useQuery({
-    queryKey: ["abouts", endpoint],
+    queryKey: [QUERY_KEYS.ABOUTS, endpoint],
     queryFn: async () => {
       const response = await $fetch<{ data: AboutCard[] }>(
         `${config.public.strapiUrl}/api/${endpoint}?populate=*`
@@ -14,9 +15,9 @@ export const useAboutData = (endpoint: string) => {
       return (
         response.data?.map((item: AboutCard) => ({
           id: item.id,
-          name: item.name ?? null,
-          description: item.description ?? null,
-          buttonText: item.buttonText ?? null,
+          name: item.name ?? "",
+          description: item.description ?? "",
+          buttonText: item.buttonText ?? "",
         })) ?? []
       );
     },

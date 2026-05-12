@@ -30,7 +30,21 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
   { label: "Catalogue", to: "/catalogue" },
   { label: "News", to: "/news" },
-  { label: "Careers", to: "/careers" },
+  {
+    label: "Careers",
+    children: [
+      {
+        label: "Career",
+        to: "/careers",
+        active: route.path === "/careers",
+      },
+      {
+        label: "Career choice",
+        to: "/career-choice",
+        active: route.path === "/career-choice",
+      },
+    ],
+  },
   { label: "Accounts", to: "/accounts" },
   { label: "Specialist", to: "/specialist" },
 ]);
@@ -44,7 +58,7 @@ const items = computed<NavigationMenuItem[]>(() => [
       class: 'rounded-full',
     }"
     class="bg-[#00708B]"
-    :ui="{ container: 'flex items-center justify-between gap-10 h-full' }"
+    :ui="{ container: 'flex items-center justify-between gap-4 lg:gap-10 h-full' }"
   >
     <template #title>
       <img src="../assets/images/ee-Logo.png" alt="" class="h-8 w-auto" />
@@ -52,9 +66,10 @@ const items = computed<NavigationMenuItem[]>(() => [
     <template #right>
       <UNavigationMenu
         :items="items"
+        class="hidden lg:flex"
         :ui="{
           link: 'font-[Poppins] font-light text-[18px] py-1 leading-[27px] text-white hover:text-white/80 aria-[current=page]:bg-[#F97316] aria-[current=page]:text-white aria-[current=page]:rounded-md aria-[current=page]:px-3 aria-[current=page]:font-semibold',
-          list: 'gap-10',
+          list: 'gap-6 xl:gap-10',
         }"
       />
     </template>

@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { StrapiHeroItem } from "~/types";
+import { QUERY_KEYS } from "~/constants/api";
 
 export const useHeroData = async (endpoint: string) => {
   const config = useRuntimeConfig();
 
   return useQuery({
-    queryKey: ["hero", endpoint],
+    queryKey: [QUERY_KEYS.HERO, endpoint],
     queryFn: async () => {
       const response = await $fetch<{ data: StrapiHeroItem[] }>(
         `${config.public.strapiUrl}/api/${endpoint}?populate=*`

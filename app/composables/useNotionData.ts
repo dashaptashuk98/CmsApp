@@ -1,25 +1,27 @@
-import type { NewsResponse, NewsItem } from "~/types";
+import { useQuery } from "@tanstack/vue-query";
+import type { NewsItem, NewsResponse } from "~/types";
+import { QUERY_KEYS } from "~/constants/api";
 
 export const useNotionData = async (endpoint: string) => {
   const config = useRuntimeConfig();
-  const { data, error } = await useFetch(`${config.public.strapiUrl}/api/${endpoint}?populate=*`, {
-    transform: (res: NewsResponse) =>
-      res.data?.map((item: NewsItem) => ({
-        id: item.id,
-        authorName: item.authorName ?? "",
-        data: item.data ?? "",
-        description: item.description ?? "",
-        logo: item.logo?.url ? `${config.public.strapiUrl}${item.logo.url}` : "",
-      })) ?? [],
+
+  return useQuery({
+    queryKey: [QUERY_KEYS.NOTIONS, endpoint],
+    queryFn: async () => {
+      const response = await $fetch<NewsResponse>(
+        `${config.public.strapiUrl}/api/${endpoint}?populate=*`
+      );
+
+      return (
+        response.data?.map((item: NewsItem) => ({
+          id: item.id,
+          authorName: item.authorName ?? "",
+          data: item.data ?? "",
+          description: item.description ?? "",
+          logo: item.logo?.url ? `${config.public.strapiUrl}${item.logo.url}` : "",
+          tags: item.tags ?? [],
+        })) ?? []
+      );
+    },
   });
-
-  if (error.value) {
-    showError({
-      statusCode: error.value.statusCode,
-      statusMessage: "Не удалось загрузить данные",
-      fatal: true,
-    });
-  }
-
-  return { data };
 };

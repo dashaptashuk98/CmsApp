@@ -6,9 +6,9 @@
       :imageUrl="heroData?.[3]?.imgUrl || undefined"
     />
     <UMain>
-      <div class="py-12 mx-auto" style="max-width: 1408px">
-        <div class="flex justify-between mb-8">
-          <div class="flex flex-wrap gap-2 mt-auto">
+      <div class="py-6 md:py-10 lg:py-12 px-4 mx-auto" style="max-width: 1408px">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 md:mb-8">
+          <div class="flex flex-wrap gap-2">
             <span
               v-for="(tag, index) in TagsData"
               :key="index"
@@ -22,21 +22,20 @@
             </span>
           </div>
           <div class="flex gap-2 items-center">
-            <span>Sort by</span>
+            <span class="text-sm md:text-base">Sort by</span>
             <USelect v-model="value" :items="items" />
           </div>
         </div>
 
-        <h1 class="text-4xl font-bold text-[#222E31] mb-4">Featured News</h1>
-        <p class="text-gray-600 text-lg">
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-3 md:mb-4">Featured News</h1>
+        <p class="text-gray-600 text-base md:text-lg mb-6">
           Donec vestibulum eros eget sem tincidunt, sit amet auctor odio convallis.
         </p>
-        <div class="flex gap-5 flex-wrap">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           <NuxtLink
             v-for="item in sortHeadlines"
             :key="item.id"
             :to="`/news/${item.id}`"
-            class="max-w-114"
           >
             <HeadlineComponent
               :image-src="item.imageUrl || ''"
@@ -64,17 +63,18 @@
 <script setup lang="ts">
 import HeroComponent from "~/components/HeroComponent.vue";
 import { useTagsData } from "~/composables/useTagsData";
+import { API_ENDPOINTS } from "~/constants/api";
 import type { NewsTag, Headline } from "~/types";
 const page = ref(1);
-const { data: heroData } = await useHeroData("news");
+const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
 const items = ref(["Newest", "Latest"]);
 const value = ref("Newest");
-const { data: TagsData } = useTagsData("tags");
+const { data: TagsData } = useTagsData(API_ENDPOINTS.TAGS);
 const allHeadlines = ref<Headline[]>([]);
 
 const selectedTag = ref<string | null>(null);
 
-const { data: headlines } = useHeadlinesData("headlines", page);
+const { data: headlines } = useHeadlinesData(API_ENDPOINTS.HEADLINES, page);
 
 watch(
   headlines,

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
+import { QUERY_KEYS } from "~/constants/api";
 
 export interface EmployeeCard {
   id: number;
@@ -13,7 +14,7 @@ export const useEmployeesData = (endpoint: string) => {
   const config = useRuntimeConfig();
 
   return useQuery({
-    queryKey: ["employees", endpoint],
+    queryKey: [QUERY_KEYS.EMPLOYEES, endpoint],
     queryFn: async () => {
       const response = await $fetch<{ data: EmployeeCard[] }>(
         `${config.public.strapiUrl}/api/${endpoint}?populate=*`
@@ -22,10 +23,10 @@ export const useEmployeesData = (endpoint: string) => {
       return (
         response.data?.map((item: EmployeeCard) => ({
           id: item.id,
-          name: item.name ?? null,
-          description: item.description ?? null,
-          words: item.words ?? null,
-          position: item.position ?? null,
+          name: item.name ?? "",
+          description: item.description ?? "",
+          words: item.words ?? "",
+          position: item.position ?? "",
           logo: item.logo?.url ? `${config.public.strapiUrl}${item.logo.url}` : "",
         })) ?? []
       );
