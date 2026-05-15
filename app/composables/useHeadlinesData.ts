@@ -8,7 +8,7 @@ export const useHeadlinesData = (endpoint: string, page: Ref<number> = ref(1)) =
   return useQuery({
     queryKey: [QUERY_KEYS.HEADLINES, endpoint, page],
     queryFn: async () => {
-      const pageSize = 6;
+      const pageSize = 100;
       const response = await $fetch<{ data: Headline[] }>(
         `${config.public.strapiUrl}/api/${endpoint}?populate=*&pagination[page]=${page.value}&pagination[pageSize]=${pageSize}`
       );

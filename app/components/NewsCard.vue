@@ -9,7 +9,7 @@
       :style="isFirst ? 'max-height: 600px' : ''"
     />
     <div class="flex flex-col gap-2 flex-1 overflow-hidden">
-      <div class="text-gray-500 text-sm">{{ authorName }} • {{ date }}</div>
+      <div class="text-gray-500 text-sm">{{ authorName }} • {{ formattedDate }}</div>
       <p class="text-gray-900 line-clamp-3">{{ description }}</p>
       <div class="flex flex-wrap gap-2 mt-auto">
         <span
@@ -33,4 +33,13 @@ const props = defineProps<{
   isFirst?: boolean;
   tags?: string[];
 }>();
+
+const formattedDate = computed(() => {
+  const dateObj = new Date(props.date);
+  return dateObj.toLocaleDateString('en-US', { 
+    month: 'long', 
+    day: 'numeric', 
+    year: 'numeric' 
+  });
+});
 </script>

@@ -1,6 +1,8 @@
 <template>
   <div class="locate-us-container px-4">
-    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8">Locate Us Nearby</h2>
+    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 md:mb-8">
+      Locate Us Nearby
+    </h2>
 
     <div class="flex flex-col lg:flex-row gap-4 md:gap-6">
       <div class="w-full lg:w-96 shrink-0">
@@ -45,12 +47,12 @@
               <UIcon name="i-lucide-map-pin" class="w-4 h-4 mr-1" />
               {{ location.address }}
             </div>
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-3">
               <span class="text-sm text-orange-500 font-medium">{{ location.distance }}</span>
               <UButton
                 variant="outline"
                 size="sm"
-                class="text-[#00708B] border-[#00708B] hover:bg-[#00708B] hover:text-white"
+                class="text-[#00708B] border-[#00708B] hover:bg-[#00708B] hover:text-white max-w-[130px] text-center"
                 @click.stop="viewOnMap(location)"
               >
                 VIEW ON MAP

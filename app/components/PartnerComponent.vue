@@ -12,8 +12,10 @@
         <img
           :src="logo"
           :alt="title"
-          class="ocean__logo h-12 md:h-16 lg:h-20 w-auto object-contain"
+          width="303"
+          class="ocean__logo h-12 md:h-16 lg:h-20 w-full max-w-[303px] object-contain"
         />
+
         <h2
           class="ocean__title font-[Poppins] text-xl md:text-3xl lg:text-5xl xl:text-6xl font-bold text-white text-center leading-tight px-2"
         >

@@ -27,7 +27,10 @@
         <div v-if="groupedContent.length" class="space-y-6 md:space-y-8">
           <template v-for="(group, index) in groupedContent" :key="group.text.id">
             <div class="flex flex-col-reverse space-y-reverse space-y-6 md:space-y-8">
-              <ul v-if="group.points.length" class="list-disc list-inside text-gray-700 space-y-2 text-sm md:text-base">
+              <ul
+                v-if="group.points.length"
+                class="list-disc list-inside text-gray-700 space-y-2 text-sm md:text-base"
+              >
                 <li v-for="point in group.points" :key="point.id">
                   <span class="font-semibold">Sed posuere</span>
                   <span v-if="'point1' in point">{{ point.point1 }}</span>
@@ -65,13 +68,11 @@
     />
     <UMain>
       <div class="py-6 md:py-10 lg:py-12 mx-auto px-4" style="max-width: 1408px">
-        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-6 md:mb-9">Related News</h1>
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-6 md:mb-9">
+          Related News
+        </h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          <NuxtLink
-            v-for="item in headlines?.slice(0, 3)"
-            :key="item.id"
-            :to="`/news/${item.id}`"
-          >
+          <NuxtLink v-for="item in displayedItems" :key="item.id" :to="`/news/${item.id}`">
             <HeadlineComponent
               :image-src="item.imageUrl || ''"
               :author-name="item.author || ''"
@@ -81,12 +82,13 @@
             />
           </NuxtLink>
         </div>
-        <div class="flex justify-center mt-6 md:mt-8">
+        <div v-if="hasMore" class="flex justify-center mt-6 md:mt-8">
           <UButton
+            @click="loadMoreItems"
             trailing-icon="i-lucide-arrow-right"
             class="bg-[#00708B] hover:bg-[#005a6b] text-white font-semibold px-6 whitespace-nowrap"
           >
-            VIEW more
+            VIEW MORE
           </UButton>
         </div>
       </div>
@@ -110,10 +112,13 @@ import type {
 
 const route = useRoute();
 const { data: headlines } = useHeadlinesData(API_ENDPOINTS.HEADLINES);
-
 const newsItem = computed<Headline | undefined>(() =>
   headlines.value?.find((item: Headline) => item.id === Number(route.params.id))
 );
+const relatedNews = computed(() => 
+  (headlines.value || []).filter((item: Headline) => item.id !== Number(route.params.id))
+);
+const { displayedItems, hasMore, loadMore: loadMoreItems } = useLoadMore(relatedNews, 3, 3);
 
 function isPointBlock(block: ContentBlock): block is Point1Block | Point2Block | Point3Block {
   return (

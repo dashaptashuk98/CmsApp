@@ -45,13 +45,13 @@
         </UButton>
       </div>
 
-      <p class="text-gray-500 text-center text-sm">Posted on {{ postedDate }}</p>
+      <p class="text-gray-500 text-center text-sm">Posted on {{ formattedDate }}</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   title: string;
   employmentType: string;
   location: string;
@@ -59,4 +59,12 @@ defineProps<{
   description: string;
   postedDate: string;
 }>();
+const formattedDate = computed(() => {
+  const dateObj = new Date(props.postedDate);
+  return dateObj.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+});
 </script>

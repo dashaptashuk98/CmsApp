@@ -44,16 +44,24 @@ const handlePartnerClick = (link: string) => {
       :description="heroData?.[0]?.description || ''"
       :imageUrl="heroData?.[0]?.imgUrl || undefined"
       button-text="Button"
+      outline-button
     />
     <UMain class="flex flex-col flex-1">
-      <div class="space-y-8 md:space-y-12 lg:space-y-16 py-6 md:py-10 lg:py-12 px-4 mx-auto flex-1" style="max-width: 1408px; width: 100%">
+      <div
+        class="space-y-8 md:space-y-12 lg:space-y-16 py-6 md:py-10 lg:py-12 px-4 mx-auto flex-1"
+        style="max-width: 1408px; width: 100%"
+      >
         <section>
-          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-3 md:mb-4">Our Services</h1>
+          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-3 md:mb-4">
+            Our Services
+          </h1>
           <p class="text-gray-600 text-base md:text-lg">
             At Edmundson Electrical, we don't just provide service – we deliver excellence. Our
             commitment to quality, reliability, and customer satisfaction sets us apart.
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 md:mt-8">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 md:mt-8"
+          >
             <CardComponent
               v-for="service in services"
               :key="service.id"
@@ -66,7 +74,9 @@ const handlePartnerClick = (link: string) => {
         <MapComponent />
 
         <section>
-          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-6 md:mb-8 px-4">Our Partners</h2>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-6 md:mb-8 px-4">
+            Our Partners
+          </h2>
           <PartnerComponent
             v-for="partner in partnerData"
             :key="partner.id"
@@ -111,17 +121,21 @@ const handlePartnerClick = (link: string) => {
           </div>
         </section>
         <section class="px-4">
-          <div class="locator__wrapper flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div
+            class="locator__wrapper flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+          >
             <div class="locator__container flex flex-col gap-3">
-              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-4 md:mb-8">Locator App</h2>
+              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-4 md:mb-8">
+                Locator App
+              </h2>
               <p class="text-gray-600 text-base md:text-lg mb-4">
                 Download Our Locator App Available on iPhone and Android. Find your nearest
                 Edmundson Electrical branch with just a tap!
               </p>
             </div>
-            <div class="img__container flex gap-4 md:gap-6 flex-wrap">
-              <img src="../assets/images/pay.png" alt="" class="pay w-32 md:w-42 h-auto" />
-              <img src="../assets/images/google.png" alt="" class="pay w-32 md:w-42 h-auto" />
+            <div class="img__container flex gap-4 md:gap-6 flex-wrap xl:flex-nowrap">
+              <img src="~/assets/images/pay.png" alt="" class="pay w-32 md:w-42 h-auto" />
+              <img src="~/assets/images/google.png" alt="" class="pay w-32 md:w-42 h-auto" />
             </div>
           </div>
         </section>

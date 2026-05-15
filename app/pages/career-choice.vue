@@ -39,7 +39,6 @@
               size="lg"
               class="w-full"
               :ui="{ base: 'h-12' }"
-              :disabled="true"
             />
           </div>
           <div class="flex-1">
@@ -118,10 +117,11 @@ const locationQuery = ref("");
 const selectedCountry = ref("");
 const hasSearched = ref(false);
 
-const countries = ref(["United Kingdom", "Ireland", "Scotland", "Wales", "England", "London"]);
+const countries = ref(["Remote", "Onsite"]);
 
 const searchRole = ref("");
 const searchLocation = ref("");
+const searchCountry = ref("");
 
 const filteredRoles = computed(() => {
   if (!RoleData.value) return [];
@@ -136,13 +136,18 @@ const filteredRoles = computed(() => {
       !searchLocation.value ||
       role.location?.toLowerCase().includes(searchLocation.value.toLowerCase());
 
-    return matchesRole && matchesLocation;
+    const matchCountry =
+      !searchCountry.value ||
+      role.workType?.toLowerCase().includes(searchCountry.value.toLowerCase());
+
+    return matchesRole && matchesLocation && matchCountry;
   });
 });
 
 const handleSearch = () => {
   searchRole.value = searchQuery.value;
   searchLocation.value = locationQuery.value;
+  searchCountry.value = selectedCountry.value;
   hasSearched.value = true;
 };
 
