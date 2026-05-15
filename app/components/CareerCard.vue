@@ -61,9 +61,9 @@ const props = defineProps<{
 }>();
 const formattedDate = computed(() => {
   const dateObj = new Date(props.postedDate);
-  return dateObj.toLocaleDateString("en-GB", {
-    day: "numeric",
+  return dateObj.toLocaleDateString("en-US", {
     month: "long",
+    day: "numeric",
     year: "numeric",
   });
 });
