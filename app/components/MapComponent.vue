@@ -52,7 +52,7 @@
               <UButton
                 variant="outline"
                 size="sm"
-                class="text-[#00708B] border-[#00708B] hover:bg-[#00708B] hover:text-white max-w-[130px] text-center"
+                class="text-[#00708B] border-[#00708B] hover:bg-[#00708B] hover:text-white max-w-32.5 text-center"
                 @click.stop="viewOnMap(location)"
               >
                 VIEW ON MAP
@@ -93,7 +93,9 @@ const searchLocation = async (): Promise<void> => {
     );
 
     if (res?.length) {
-      map.setView([parseFloat(res?.[0]?.lat), parseFloat(res[0].lon)], 13);
+      const lat = res?.[0]?.lat ?? "0";
+      const lon = res[0]?.lon ?? "0";
+      map.setView([parseFloat(lat), parseFloat(lon)], 13);
     }
   } catch (error) {
     console.error("Error searching location:", error);
@@ -148,7 +150,7 @@ const addMarkersToMap = (L: typeof import("leaflet")): void => {
 
   locations.value.forEach((location) => {
     if (!location.lat || !location.lng) return;
-
+    if (!map) return;
     const marker = L.marker([location.lat, location.lng], { icon: customIcon }).addTo(map);
 
     marker.bindPopup(`
@@ -171,7 +173,6 @@ onMounted(async () => {
 
     map = L.map("map").setView([51.5074, -0.1278], 12);
 
-    // Добавляем тайловый слой
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap contributors",
     }).addTo(map);

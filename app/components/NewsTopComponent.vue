@@ -1,18 +1,3 @@
-<script setup lang="ts">
-const props = defineProps<{
-  title: string;
-  date: string;
-  author?: string;
-}>();
-const formattedDate = computed(() => {
-  const dateObj = new Date(props.date);
-  return dateObj.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-});
-</script>
 <template>
   <div class="bg-[#00708B]">
     <div class="mx-auto px-4" style="max-width: 1408px">
@@ -22,7 +7,7 @@ const formattedDate = computed(() => {
             < Blog / {{ props.title }}
           </NuxtLink>
           <p class="font-[Poppins] font-semibold text-base md:text-lg lg:text-xl text-white my-2">
-            {{ formattedDate }}
+            {{ formatted }}
           </p>
 
           <p
@@ -38,3 +23,14 @@ const formattedDate = computed(() => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useFormattedDate } from "~/composables/useFormattedDate";
+
+const props = defineProps<{
+  title: string;
+  date: string;
+  author?: string;
+}>();
+const formatted = useFormattedDate(props.date);
+</script>

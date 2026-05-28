@@ -13,7 +13,7 @@
           :src="logo"
           :alt="title"
           width="303"
-          class="ocean__logo h-12 md:h-16 lg:h-20 w-full max-w-[303px] object-contain"
+          class="ocean__logo h-12 md:h-16 lg:h-20 w-full max-w-75.75 object-contain"
         />
 
         <h2
@@ -47,17 +47,9 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
-  title: string;
-  subtitle: string;
-  description: string;
-  logo: string;
-  backgroundImage: string;
-  buttonText?: string;
-  buttonLink?: string;
-}
+import type { PartnerProps } from "~/types";
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PartnerProps>(), {
   buttonText: "Learn more",
   buttonLink: "#",
 });

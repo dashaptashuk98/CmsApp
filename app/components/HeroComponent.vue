@@ -1,14 +1,3 @@
-<script setup lang="ts">
-const props = defineProps<{
-  title: string;
-  description: string;
-  buttonText?: string;
-  buttonText2?: string;
-  imageUrl?: string;
-  hideImage?: boolean;
-  outlineButton?: boolean;
-}>();
-</script>
 <template>
   <div class="bg-[#00708B]">
     <div class="mx-auto px-4" style="max-width: 1408px">
@@ -35,14 +24,22 @@ const props = defineProps<{
               v-if="props.buttonText"
               trailing-icon="i-lucide-arrow-right"
               size="md"
-              :class="props.outlineButton ? 'self-start gap-3 bg-[#00708B] border-2 border-white text-white hover:bg-[#005a6e] uppercase' : 'self-start gap-3 bg-orange-500 hover:bg-orange-600 uppercase'"
+              :class="
+                props.outlineButton
+                  ? 'self-start gap-3 bg-[#00708B] border-2 border-white text-white hover:bg-[#005a6e] uppercase'
+                  : 'self-start gap-3 bg-orange-500 hover:bg-orange-600 uppercase'
+              "
               >{{ props.buttonText }}</UButton
             >
             <UButton
               v-if="props.buttonText2"
               trailing-icon="i-lucide-arrow-right"
               size="md"
-              :class="props.outlineButton ? 'self-start gap-3 bg-[#00708B] border-2 border-white text-white hover:bg-[#005a6e] uppercase' : 'self-start gap-3 bg-orange-500 hover:bg-orange-600 uppercase'"
+              :class="
+                props.outlineButton
+                  ? 'self-start gap-3 bg-[#00708B] border-2 border-white text-white hover:bg-[#005a6e] uppercase'
+                  : 'self-start gap-3 bg-orange-500 hover:bg-orange-600 uppercase'
+              "
               >{{ props.buttonText2 }}</UButton
             >
           </div>
@@ -57,3 +54,15 @@ const props = defineProps<{
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  title: string;
+  description: string;
+  buttonText?: string;
+  buttonText2?: string;
+  imageUrl?: string;
+  hideImage?: boolean;
+  outlineButton?: boolean;
+}>();
+</script>

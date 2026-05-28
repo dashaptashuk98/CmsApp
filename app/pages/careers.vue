@@ -102,18 +102,12 @@
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
 import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
+import type { Values } from "~/types";
 
 const config = useRuntimeConfig();
 const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
 const { data: CareerData } = useCareerData(API_ENDPOINTS.CAREERS);
 const { data: EmployeeData } = useEmployeesData(API_ENDPOINTS.EMPLOYEES);
-
-interface Values {
-  id: number;
-  title: string;
-  description: string;
-  logo?: { url: string };
-}
 
 const { data: values } = useQuery<Values[]>({
   queryKey: [QUERY_KEYS.COMMITMENTS],

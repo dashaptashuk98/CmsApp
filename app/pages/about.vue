@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import { useHeroData } from "~/composables/useHeroData";
-import { API_ENDPOINTS } from "~/constants/api";
-
-const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
-const { data: AboutData } = await useAboutData(API_ENDPOINTS.ABOUTS);
-const { data: imgData } = useImgData(API_ENDPOINTS.PHOTOS);
-</script>
-
 <template>
   <div>
     <div class="relative">
@@ -130,3 +121,12 @@ const { data: imgData } = useImgData(API_ENDPOINTS.PHOTOS);
     </UMain>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useHeroData } from "~/composables/useHeroData";
+import { API_ENDPOINTS } from "~/constants/api";
+
+const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
+const { data: AboutData } = await useAboutData(API_ENDPOINTS.ABOUTS);
+const { data: imgData } = useImgData(API_ENDPOINTS.PHOTOS);
+</script>

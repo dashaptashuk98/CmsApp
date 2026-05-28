@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+import { useFormattedDate } from "~/composables/useFormattedDate";
 const props = defineProps<{
   imageSrc: string;
   authorName: string;
@@ -29,12 +30,5 @@ const props = defineProps<{
   title: string;
   description: string;
 }>();
-const formattedDate = computed(() => {
-  const dateObj = new Date(props.date);
-  return dateObj.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-});
+const formattedDate = useFormattedDate(props.date);
 </script>

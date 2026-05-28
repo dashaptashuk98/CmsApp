@@ -34,7 +34,7 @@
           <div class="flex-1">
             <USelect
               v-model="selectedCountry"
-              placeholder="Country"
+              placeholder="Work type"
               :items="countries"
               size="lg"
               class="w-full"

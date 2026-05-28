@@ -45,12 +45,13 @@
         </UButton>
       </div>
 
-      <p class="text-gray-500 text-center text-sm">Posted on {{ formattedDate }}</p>
+      <p class="text-gray-500 text-center text-sm">Posted on {{ formatted }}</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useFormattedDate } from "~/composables/useFormattedDate";
 const props = defineProps<{
   title: string;
   employmentType: string;
@@ -59,12 +60,5 @@ const props = defineProps<{
   description: string;
   postedDate: string;
 }>();
-const formattedDate = computed(() => {
-  const dateObj = new Date(props.postedDate);
-  return dateObj.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-});
+const formatted = useFormattedDate(props.postedDate);
 </script>

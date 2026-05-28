@@ -1,29 +1,3 @@
-<script setup lang="ts">
-import { useHeroData } from "~/composables/useHeroData";
-import { useQuery } from "@tanstack/vue-query";
-import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
-
-const config = useRuntimeConfig();
-
-interface Values {
-  id: number;
-  title: string;
-  description: string;
-  logo?: { url: string };
-}
-
-const { data: values } = useQuery<Values[]>({
-  queryKey: [QUERY_KEYS.VALUES],
-  queryFn: async () => {
-    const res = await $fetch<{ data: Values[] }>(
-      `${config.public.strapiUrl}/api/${API_ENDPOINTS.VALUES}?populate=*`
-    );
-    return res.data ?? [];
-  },
-});
-const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
-</script>
-
 <template>
   <div class="flex flex-col min-h-screen">
     <div class="relative">
@@ -40,13 +14,20 @@ const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
     </div>
 
     <UMain class="flex flex-col flex-1">
-      <div class="space-y-12 md:space-y-16 py-8 md:py-12 px-4 md:px-6 lg:px-0 mx-auto flex-1 w-full" style="max-width: 1408px">
+      <div
+        class="space-y-12 md:space-y-16 py-8 md:py-12 px-4 md:px-6 lg:px-0 mx-auto flex-1 w-full"
+        style="max-width: 1408px"
+      >
         <section>
-          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-2 md:mb-4">Our Values</h1>
+          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#222E31] mb-2 md:mb-4">
+            Our Values
+          </h1>
           <p class="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
             Donec vestibulum eros eget sem tincidunt, sit amet auctor odio convallis.
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 md:mt-8">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 md:mt-8"
+          >
             <CardComponent
               v-for="value in values"
               :key="value.id"
@@ -78,3 +59,22 @@ const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
     </UMain>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useHeroData } from "~/composables/useHeroData";
+import { useQuery } from "@tanstack/vue-query";
+import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
+import type { Value } from "~/types";
+const config = useRuntimeConfig();
+
+const { data: values } = useQuery<Value[]>({
+  queryKey: [QUERY_KEYS.VALUES],
+  queryFn: async () => {
+    const res = await $fetch<{ data: Value[] }>(
+      `${config.public.strapiUrl}/api/${API_ENDPOINTS.VALUES}?populate=*`
+    );
+    return res.data ?? [];
+  },
+});
+const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
+</script>

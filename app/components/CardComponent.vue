@@ -5,7 +5,9 @@
       <h3 class="text-xl md:text-2xl font-bold text-center text-[#00708B]">
         {{ title }}
       </h3>
-      <p class="text-base md:text-lg text-gray-600 font-light text-center font-[Poppins] max-w-78 mx-auto">
+      <p
+        class="text-base md:text-lg text-gray-600 font-light text-center font-[Poppins] max-w-78 mx-auto"
+      >
         {{ description }}
       </p>
     </div>
@@ -14,15 +16,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import type { CardProps } from "@/types/index.ts";
 
-interface Props {
-  imageSrc: string;
-  title: string;
-  description: string;
-  isFirst?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<CardProps>(), {
   isFirst: false,
 });
 

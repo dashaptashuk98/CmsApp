@@ -22,7 +22,7 @@ describe("CareerCard", () => {
     expect(wrapper.text()).toContain("London");
     expect(wrapper.text()).toContain("Onsite");
     expect(wrapper.text()).toContain("Get essential equipment");
-    expect(wrapper.text()).toContain("12 December 2024");
+    expect(wrapper.text()).toContain("December 12, 2024");
   });
 
   it("has LEARN MORE button", () => {

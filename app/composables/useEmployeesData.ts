@@ -1,14 +1,6 @@
 import { useQuery } from "@tanstack/vue-query";
 import { QUERY_KEYS } from "~/constants/api";
-
-export interface EmployeeCard {
-  id: number;
-  name: string;
-  description: string;
-  logo?: { url: string };
-  words: string;
-  position: string;
-}
+import type { EmployeeCard } from "~/types";
 
 export const useEmployeesData = (endpoint: string) => {
   const config = useRuntimeConfig();

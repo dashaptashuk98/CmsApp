@@ -1,42 +1,3 @@
-<script setup lang="ts">
-import HeroComponent from "~/components/HeroComponent.vue";
-import CardComponent from "~/components/CardComponent.vue";
-import MapComponent from "~/components/MapComponent.vue";
-import PartnerComponent from "~/components/PartnerComponent.vue";
-import NewsCard from "~/components/NewsCard.vue";
-import { useQuery } from "@tanstack/vue-query";
-import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
-
-const config = useRuntimeConfig();
-
-interface Service {
-  id: number;
-  title: string;
-  description: string;
-  img?: { url: string };
-}
-
-const { data: services } = useQuery<Service[]>({
-  queryKey: [QUERY_KEYS.SERVICES],
-  queryFn: async () => {
-    const res = await $fetch<{ data: Service[] }>(
-      `${config.public.strapiUrl}/api/${API_ENDPOINTS.SERVICES}?populate=*`
-    );
-    return res.data ?? [];
-  },
-});
-
-const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
-
-const { data: partnerData } = await usePartnerData(API_ENDPOINTS.PARTNERS);
-
-const { data: notionData } = await useNotionData(API_ENDPOINTS.NOTIONS);
-
-const handlePartnerClick = (link: string) => {
-  console.log("Partner link clicked:", link);
-};
-</script>
-
 <template>
   <div class="flex flex-col min-h-screen">
     <HeroComponent
@@ -86,7 +47,6 @@ const handlePartnerClick = (link: string) => {
             :logo="partner.logo"
             :background-image="partner.backgroundImage"
             button-text="Learn more"
-            @button-click="handlePartnerClick"
             class="mb-6 md:mb-8"
           />
         </section>
@@ -149,3 +109,32 @@ const handlePartnerClick = (link: string) => {
     </UMain>
   </div>
 </template>
+
+<script setup lang="ts">
+import HeroComponent from "~/components/HeroComponent.vue";
+import CardComponent from "~/components/CardComponent.vue";
+import MapComponent from "~/components/MapComponent.vue";
+import PartnerComponent from "~/components/PartnerComponent.vue";
+import NewsCard from "~/components/NewsCard.vue";
+
+import { useQuery } from "@tanstack/vue-query";
+
+import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
+
+import type { Service } from "~/types";
+
+const config = useRuntimeConfig();
+const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
+const { data: partnerData } = await usePartnerData(API_ENDPOINTS.PARTNERS);
+const { data: notionData } = await useNotionData(API_ENDPOINTS.NOTIONS);
+
+const { data: services } = useQuery<Service[]>({
+  queryKey: [QUERY_KEYS.SERVICES],
+  queryFn: async () => {
+    const res = await $fetch<{ data: Service[] }>(
+      `${config.public.strapiUrl}/api/${API_ENDPOINTS.SERVICES}?populate=*`
+    );
+    return res.data ?? [];
+  },
+});
+</script>

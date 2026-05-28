@@ -25,13 +25,6 @@
 </template>
 
 <script setup lang="ts">
-defineProps<Props>();
-
-interface Props {
-  imageSrc: string;
-  name: string;
-  words: string;
-  description: string;
-  position: string;
-}
+import type { EmployeeProps } from "~/types";
+defineProps<EmployeeProps>();
 </script>
