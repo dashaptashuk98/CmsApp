@@ -76,5 +76,6 @@ const { data: values } = useQuery<Value[]>({
     return res.data ?? [];
   },
 });
+
 const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
 </script>

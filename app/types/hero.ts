@@ -7,6 +7,12 @@ export interface StrapiHeroItem {
   img?: StrapiImage[];
 }
 
+export interface TransformedHeroItem {
+  title: string | null;
+  description: string | null;
+  imgUrl: string | null;
+}
+
 export interface StrapiResponse {
   data?: StrapiHeroItem[];
 }
