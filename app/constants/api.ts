@@ -1,0 +1,33 @@
+export const API_ENDPOINTS = {
+  NEWS: "news",
+  PARTNERS: "partners",
+  NOTIONS: "notions",
+  SERVICES: "services",
+  ABOUTS: "abouts",
+  VALUES: "values",
+  COMMITMENTS: "commitments",
+  CAREERS: "careers",
+  EMPLOYEES: "employees",
+  HEADLINES: "headlines",
+  TAGS: "tags",
+  LOCATIONS: "locations",
+  PHOTOS: "photos",
+  ROLE: "positions",
+} as const;
+
+export const QUERY_KEYS = {
+  HERO: "hero",
+  PARTNER: "partner",
+  NOTIONS: "notions",
+  SERVICES: "services",
+  ABOUTS: "abouts",
+  VALUES: "values",
+  COMMITMENTS: "commitments",
+  CAREERS: "careers",
+  EMPLOYEES: "employees",
+  HEADLINES: "headlines",
+  TAGS: "tags",
+  LOCATIONS: "locations",
+  PHOTOS: "photos",
+  ROLE: "positions",
+} as const;

@@ -1,40 +1,68 @@
-<script setup lang="ts">
-// const config = useRuntimeConfig();
-
-// const { data } = await useFetch(`${config.public.strapiUrl}/api/new?populate=*`, {
-//   transform: (res: any) => {
-//     const item = res.data?.[0];
-//     if (!item) return null;
-//     return {
-//       title: item.title?.[0]?.children?.[0]?.text ?? null,
-//       description: item.decription?.[0]?.children?.[0]?.text ?? null,
-//       imgUrl: item.img?.[0]?.url ? `${config.public.strapiUrl}${item.img[0].url}` : null,
-//     };
-//   },
-// });
-</script>
 <template>
   <div class="bg-[#00708B]">
     <div class="mx-auto px-4" style="max-width: 1408px">
-      <div class="flex flex-row items-center pt-16 pb-16">
-        <div class="flex flex-col gap-8">
-          <p class="font-[Poppins] font-bold text-[64px] leading-21.5 text-white w-[712px]">
-            Powering Innovation, Delivering Excellence
-          </p>
-          <p class="font-[Poppins] font-regular text-[20px] text-white w-[712px]">
-            At Edmundson Electrical, we are your trusted partner in electrical distribution,
-            combining over two centuries of expertise with a commitment to quality, innovation, and
-            exceptional service. Together, let's build a brighter future.
-          </p>
-          <UButton
-            trailing-icon="i-lucide-arrow-right"
-            size="md"
-            class="self-start gap-3 bg-orange-500 hover:bg-orange-600"
-            >Button</UButton
+      <div class="flex flex-row items-center pt-8 pb-8 md:pt-16 md:pb-16">
+        <div
+          :class="
+            props.hideImage
+              ? 'w-full text-left flex flex-col gap-4 md:gap-8'
+              : 'flex flex-col gap-4 md:gap-8'
+          "
+        >
+          <p
+            class="font-[Poppins] font-bold text-[32px] md:text-[48px] lg:text-[64px] leading-tight text-white max-w-225"
           >
+            {{ props.title }}
+          </p>
+          <p
+            class="font-[Poppins] font-regular text-[16px] md:text-[18px] lg:text-[20px] text-white max-w-225"
+          >
+            {{ props.description }}
+          </p>
+          <div class="flex gap-3">
+            <UButton
+              v-if="props.buttonText"
+              trailing-icon="i-lucide-arrow-right"
+              size="md"
+              :class="
+                props.outlineButton
+                  ? 'self-start gap-3 bg-[#00708B] border-2 border-white text-white hover:bg-[#005a6e] uppercase'
+                  : 'self-start gap-3 bg-orange-500 hover:bg-orange-600 uppercase'
+              "
+              >{{ props.buttonText }}</UButton
+            >
+            <UButton
+              v-if="props.buttonText2"
+              trailing-icon="i-lucide-arrow-right"
+              size="md"
+              :class="
+                props.outlineButton
+                  ? 'self-start gap-3 bg-[#00708B] border-2 border-white text-white hover:bg-[#005a6e] uppercase'
+                  : 'self-start gap-3 bg-orange-500 hover:bg-orange-600 uppercase'
+              "
+              >{{ props.buttonText2 }}</UButton
+            >
+          </div>
         </div>
-        <img src="../assets/images/main.png" alt="" class="flex-1 min-w-0 object-contain" />
+        <img
+          v-if="props.imageUrl && !props.hideImage"
+          :src="props.imageUrl"
+          alt=""
+          class="hidden xl:block flex-1 min-w-0 object-contain"
+        />
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  title: string;
+  description: string;
+  buttonText?: string;
+  buttonText2?: string;
+  imageUrl?: string;
+  hideImage?: boolean;
+  outlineButton?: boolean;
+}>();
+</script>
