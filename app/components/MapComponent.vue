@@ -14,14 +14,14 @@
             icon="i-lucide-search"
           />
           <UButton
-            @click="searchLocation"
             class="w-full mt-4 bg-[#00708B] hover:bg-[#005a6b] h-12 text-white font-semibold rounded-lg flex items-center justify-center"
+            @click="searchLocation"
           >
             SEARCH
           </UButton>
         </div>
 
-        <div class="space-y-4 max-h-96 lg:max-h-none overflow-y-auto">
+        <div class="space-y-4 max-h-96 overflow-y-auto">
           <div
             v-for="(location, index) in locations"
             :key="index"
@@ -97,8 +97,8 @@ const searchLocation = async (): Promise<void> => {
       const lon = res[0]?.lon ?? "0";
       map.setView([parseFloat(lat), parseFloat(lon)], 13);
     }
-  } catch (error) {
-    console.error("Error searching location:", error);
+  } catch {
+    //catch error
   }
 };
 
@@ -186,8 +186,8 @@ onMounted(async () => {
       },
       { immediate: true }
     );
-  } catch (error) {
-    console.error("Error initializing map:", error);
+  } catch {
+    //catch error
   }
 });
 </script>

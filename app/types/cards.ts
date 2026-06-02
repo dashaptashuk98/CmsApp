@@ -35,3 +35,13 @@ export interface EmployeeCard {
   words: string;
   position: string;
 }
+
+export interface RoleCard {
+  id: number;
+  title: string;
+  description: string;
+  employmentType: string;
+  workType: string;
+  location: string;
+  date: string;
+}

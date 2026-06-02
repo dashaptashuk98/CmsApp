@@ -1,15 +1,6 @@
 import { useQuery } from "@tanstack/vue-query";
 import { QUERY_KEYS } from "~/constants/api";
-
-export interface RoleCard {
-  id: number;
-  title: string;
-  description: string;
-  employmentType: string;
-  workType: string;
-  location: string;
-  date: string;
-}
+import type { RoleCard } from "~/types";
 
 export const useRoleData = (endpoint: string) => {
   const config = useRuntimeConfig();

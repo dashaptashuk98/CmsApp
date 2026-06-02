@@ -2,8 +2,8 @@
   <div>
     <div class="relative">
       <HeroComponent
-        :title="heroData?.[5]?.title || 'About Us'"
-        :description="heroData?.[5]?.description || 'Learn more about Edmundson Electrical'"
+        :title="leadingHero?.title || 'About Us'"
+        :description="leadingHero?.description || 'Learn more about Edmundson Electrical'"
         :hide-image="true"
         button-text="Contact US"
         class="z-10"
@@ -52,20 +52,20 @@
             />
           </div>
           <UButton
-            @click="handleSearch"
             size="lg"
             class="bg-[#00708B] hover:bg-[#005a6b] text-white font-semibold px-8 h-12 whitespace-nowrap"
+            @click="handleSearch"
           >
             SEARCH
           </UButton>
           <div class="flex gap-2">
             <UButton
-              @click="resetSearch"
               variant="ghost"
               size="lg"
               icon="i-lucide-x"
               class="text-gray-600 h-12 w-12"
               square
+              @click="resetSearch"
             />
             <UButton
               variant="ghost"
@@ -159,4 +159,6 @@ const resetSearch = () => {
   searchLocation.value = "";
   hasSearched.value = false;
 };
+
+const leadingHero = useFindHero(heroData, "Explore Opportunities at Edmundson Electrical");
 </script>

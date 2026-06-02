@@ -6,9 +6,9 @@
       />
       <div class="relative z-10">
         <HeroComponent
-          :title="heroData?.[2]?.title || 'About Us'"
-          :description="heroData?.[2]?.description || 'Learn more about Edmundson Electrical'"
-          :image-url="heroData?.[2]?.imgUrl || undefined"
+          :title="leadingHero?.title || 'About Us'"
+          :description="leadingHero?.description || 'Learn more about Edmundson Electrical'"
+          :image-url="leadingHero?.imgUrl || undefined"
           button-text="Contact US"
         />
       </div>
@@ -129,4 +129,6 @@ import { API_ENDPOINTS } from "~/constants/api";
 const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
 const { data: AboutData } = await useAboutData(API_ENDPOINTS.ABOUTS);
 const { data: imgData } = useImgData(API_ENDPOINTS.PHOTOS);
+
+const leadingHero = useFindHero(heroData, "Powering Innovation, Delivering Excellence");
 </script>

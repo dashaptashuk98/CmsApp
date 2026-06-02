@@ -1,9 +1,9 @@
 <template>
   <div>
     <HeroComponent
-      :title="heroData?.[3]?.title || 'News'"
-      :description="heroData?.[3]?.description || ''"
-      :imageUrl="heroData?.[3]?.imgUrl || undefined"
+      :title="leadingHero?.title || 'News'"
+      :description="leadingHero?.description || ''"
+      :image-url="leadingHero?.imgUrl || undefined"
     />
     <UMain>
       <div class="py-6 md:py-10 lg:py-12 px-4 mx-auto" style="max-width: 1408px">
@@ -14,11 +14,11 @@
             <span
               v-for="(tag, index) in TagsData"
               :key="index"
-              @click="filterByTag(tag.name)"
               :class="[
                 'px-3 py-1 text-sm border border-gray-900 rounded-full cursor-pointer',
                 selectedTag === tag.name ? 'bg-gray-900 text-white' : 'text-gray-900 bg-white',
               ]"
+              @click="filterByTag(tag.name)"
             >
               {{ tag.name }}
             </span>
@@ -48,9 +48,9 @@
         </div>
         <div v-if="hasMore" class="flex justify-center mt-8">
           <UButton
-            @click="loadMoreItems"
             trailing-icon="i-lucide-arrow-right"
             class="bg-[#00708B] hover:bg-[#005a6b] text-white font-semibold px-6 whitespace-nowrap"
+            @click="loadMoreItems"
           >
             VIEW MORE
           </UButton>
@@ -64,7 +64,7 @@
 import HeroComponent from "~/components/HeroComponent.vue";
 import { useTagsData } from "~/composables/useTagsData";
 import { API_ENDPOINTS } from "~/constants/api";
-import type { NewsTag, Headline } from "~/types";
+import type { NewsTag } from "~/types";
 const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
 const items = ref(["Newest", "Latest"]);
 const value = ref("Newest");
@@ -97,6 +97,8 @@ const sortHeadlines = computed(() => {
     return sorted.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   }
 });
+
+const leadingHero = useFindHero(heroData, "News");
 
 const { displayedItems, hasMore, loadMore: loadMoreItems } = useLoadMore(sortHeadlines, 3, 3);
 </script>

@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import AlertsComponnet from "~/components/AlertsComponnet.vue";
+import AlertsComponnet from "~/components/AlertsComponent.vue";
 
-describe("AlertsComponnet", () => {
+describe("AlertsComponent", () => {
   const defaultProps = {
     title: "Alert Title",
     description: "Alert Description",

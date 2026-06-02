@@ -2,8 +2,8 @@
   <div>
     <div class="relative">
       <HeroComponent
-        :title="heroData?.[4]?.title || 'About Us'"
-        :description="heroData?.[4]?.description || 'Learn more about Edmundson Electrical'"
+        :title="leadingHero?.title || 'About Us'"
+        :description="leadingHero?.description || 'Learn more about Edmundson Electrical'"
         :hide-image="true"
         button-text="Explore Opportunities"
         button-text2="Contact US"
@@ -100,22 +100,14 @@
 </template>
 
 <script setup lang="ts">
-import { useQuery } from "@tanstack/vue-query";
-import { API_ENDPOINTS, QUERY_KEYS } from "~/constants/api";
-import type { Values } from "~/types";
+import { useValueData } from "~/composables/useValueData";
+import { API_ENDPOINTS } from "~/constants/api";
 
 const config = useRuntimeConfig();
 const { data: heroData } = await useHeroData(API_ENDPOINTS.NEWS);
 const { data: CareerData } = useCareerData(API_ENDPOINTS.CAREERS);
 const { data: EmployeeData } = useEmployeesData(API_ENDPOINTS.EMPLOYEES);
+const { data: values } = useValueData(API_ENDPOINTS.COMMITMENTS);
 
-const { data: values } = useQuery<Values[]>({
-  queryKey: [QUERY_KEYS.COMMITMENTS],
-  queryFn: async () => {
-    const res = await $fetch<{ data: Values[] }>(
-      `${config.public.strapiUrl}/api/${API_ENDPOINTS.COMMITMENTS}?populate=*`
-    );
-    return res.data ?? [];
-  },
-});
+const leadingHero = useFindHero(heroData, "Looking for a Rewarding Career?");
 </script>
